@@ -3,6 +3,7 @@ import { book } from '../data'
 
 export default function Book() {
   const [selectedBook, setSelectedBook] = useState(null)
+  const bookItem = book[0]
 
   return (
     <section id="book" className="py-24 bg-[#321A47] relative overflow-hidden">
@@ -21,6 +22,7 @@ export default function Book() {
           }}
         ></div>
       ))}
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16 animate-rise-up">
           <div className="inline-flex items-center gap-2 border border-[#D47FA6]/30 text-[#D47FA6] px-4 py-2 mb-4 text-sm font-quicksand font-bold rounded-full">
@@ -33,41 +35,96 @@ export default function Book() {
             Discover the cosmic tale that's capturing hearts across the galaxy
           </p>
         </div>
-        <div className="flex justify-center">
-          {book.map((bookItem, i) => (
-            <div key={bookItem.id} className="group animate-rise-up max-w-sm w-full" style={{ animationDelay: `${i * 0.15}s` }}>
-              <div className="bg-[#2A1A3F] border border-[#D47FA6]/10 hover:border-[#D47FA6]/30 transition-all shadow-lg hover:shadow-xl hover-lift h-full flex flex-col rounded-2xl overflow-hidden">
-                <div className="bg-gradient-to-br from-[#2A1A3F] to-[#321A47] overflow-hidden relative flex items-center justify-center p-6">
-                  <div className="absolute top-3 left-3 z-10 px-3 py-1 bg-[#2A9DF4] text-white text-xs font-quicksand font-bold rounded-full">
-                    {bookItem.statusText}
-                  </div>
-                  <img src={bookItem.coverImage} alt={bookItem.title} className="w-48 h-64 object-contain group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      e.target.style.display = 'none'
-                      e.target.parentElement.classList.add('min-h-[250px]')
-                      e.target.parentElement.innerHTML = `<div class="text-center p-6"><div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#8B5A2B] to-[#6B3F1F] rounded-full"></div><p class="text-lg font-playfair text-[#D47FA6]">${bookItem.title}</p></div>`
-                    }}
-                  />
+
+        {/* Book Layout - Image Left, Description Right */}
+        <div className="grid md:grid-cols-5 gap-10 max-w-5xl mx-auto animate-rise-up">
+          {/* Book Cover - Left Side */}
+          <div className="md:col-span-2 flex justify-center md:justify-end">
+            <div className="relative group cursor-pointer" onClick={() => setSelectedBook(bookItem)}>
+              <div className="absolute -inset-4 bg-[#D47FA6]/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative bg-gradient-to-br from-[#2A1A3F] to-[#321A47] border border-[#D47FA6]/10 hover:border-[#D47FA6]/30 transition-all shadow-lg hover:shadow-xl hover-lift rounded-2xl overflow-hidden">
+                <div className="absolute top-3 left-3 z-10 px-3 py-1 bg-[#2A9DF4] text-white text-xs font-quicksand font-bold rounded-full">
+                  {bookItem.statusText}
                 </div>
-                <div className="p-5 flex-1 flex flex-col">
-                  {bookItem.subtitle && <p className="text-[#2A9DF4] text-xs font-quicksand font-bold uppercase tracking-wider mb-2">{bookItem.subtitle}</p>}
-                  <h3 className="text-lg font-playfair text-white mb-2 group-hover:text-[#D47FA6] transition-colors">{bookItem.title}</h3>
-                  <p className="text-[#D47FA6]/50 text-sm font-playfair leading-relaxed mb-4 flex-1 line-clamp-3">{bookItem.description}</p>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {bookItem.themes.map((theme, i) => (
-                      <span key={i} className="px-2.5 py-1 bg-[#321A47] text-[#D47FA6] text-xs font-quicksand font-bold rounded-full border border-[#D47FA6]/10">{theme}</span>
-                    ))}
-                  </div>
-                  <button onClick={() => setSelectedBook(bookItem)} className="w-full py-2.5 border-2 border-[#D47FA6]/30 text-[#D47FA6] font-quicksand font-bold text-sm rounded-full hover:bg-[#D47FA6]/10 hover:border-[#D47FA6]/50 transition-all">
-                    View Details
-                  </button>
-                </div>
+                <img 
+                  src={bookItem.coverImage} 
+                  alt={bookItem.title} 
+                  className="w-64 md:w-72 h-auto object-contain group-hover:scale-105 transition-transform duration-500 p-4"
+                  onError={(e) => {
+                    e.target.style.display = 'none'
+                    e.target.parentElement.classList.add('min-h-[350px]', 'flex', 'items-center', 'justify-center')
+                    e.target.parentElement.innerHTML = `<div class="text-center p-8"><div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-[#8B5A2B] to-[#6B3F1F] rounded-full"></div><p class="text-lg font-playfair text-[#D47FA6]">${bookItem.title}</p></div>`
+                  }}
+                />
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* Book Details - Right Side */}
+          <div className="md:col-span-3 flex flex-col justify-center space-y-6">
+            <div>
+              {bookItem.subtitle && (
+                <p className="text-[#2A9DF4] text-sm font-quicksand font-bold uppercase tracking-wider mb-2">{bookItem.subtitle}</p>
+              )}
+              <h3 className="text-3xl md:text-4xl font-playfair text-white mb-3">{bookItem.title}</h3>
+              <div className="w-16 h-[3px] bg-gradient-to-r from-[#D47FA6] to-[#2A9DF4] rounded-full"></div>
+            </div>
+
+            <p className="text-[#D47FA6]/70 leading-relaxed font-playfair text-base">
+              {bookItem.description}
+            </p>
+
+            {bookItem.description2 && (
+              <p className="text-[#D47FA6]/50 leading-relaxed font-playfair text-sm">
+                {bookItem.description2}
+              </p>
+            )}
+
+            {bookItem.description3 && (
+              <p className="text-[#D47FA6]/40 leading-relaxed font-playfair text-sm italic border-l-2 border-[#2A9DF4]/30 pl-4">
+                {bookItem.description3}
+              </p>
+            )}
+
+            {bookItem.tagline && (
+              <p className="text-[#D47FA6] text-base font-playfair italic">
+                "{bookItem.tagline}"
+              </p>
+            )}
+
+            {/* Themes */}
+            <div className="flex flex-wrap gap-2">
+              {bookItem.themes.map((theme, i) => (
+                <span key={i} className="px-3 py-1.5 bg-[#2A1A3F] text-[#D47FA6] text-xs font-quicksand font-bold rounded-full border border-[#D47FA6]/20">
+                  {theme}
+                </span>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-3 pt-2">
+              <button 
+                onClick={() => setSelectedBook(bookItem)} 
+                className="px-6 py-3 bg-gradient-to-r from-[#D47FA6] to-[#C06A8E] text-white font-quicksand font-bold text-sm rounded-full hover:shadow-[0_0_25px_rgba(212,127,166,0.4)] transition-all hover-lift"
+              >
+                View Full Details
+              </button>
+              {bookItem.status === 'published' && bookItem.purchaseLinks && (
+                <a 
+                  href={bookItem.purchaseLinks[0].url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="px-6 py-3 border-2 border-[#D47FA6]/40 text-[#D47FA6] font-quicksand font-bold text-sm rounded-full hover:border-[#2A9DF4] hover:text-[#2A9DF4] transition-all hover-lift"
+                >
+                  Buy on {bookItem.purchaseLinks[0].name}
+                </a>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Book Detail Modal */}
       {selectedBook && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#321A47]/95 backdrop-blur-sm" onClick={() => setSelectedBook(null)}>
           <div className="bg-[#2A1A3F] max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-[#D47FA6]/20 rounded-2xl" onClick={(e) => e.stopPropagation()}>
