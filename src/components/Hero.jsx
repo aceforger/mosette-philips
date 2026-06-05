@@ -46,10 +46,6 @@ export default function Hero() {
       <div className="absolute top-10 right-20 w-[300px] h-[200px] bg-gradient-to-br from-[#D47FA6]/8 via-[#2A9DF4]/5 to-transparent rounded-full blur-[60px] animate-nebula-drift"></div>
       <div className="absolute bottom-20 left-10 w-[250px] h-[180px] bg-gradient-to-br from-[#2A9DF4]/8 via-[#D47FA6]/5 to-transparent rounded-full blur-[50px] animate-nebula-drift" style={{ animationDelay: '4s' }}></div>
 
-      {/* <div className="absolute top-1/4 right-1/3 w-32 h-[1.5px] bg-gradient-to-l from-white via-[#2A9DF4] to-transparent rounded-full animate-meteor"></div>
-      <div className="absolute bottom-1/3 left-1/4 w-24 h-[1px] bg-gradient-to-r from-white via-[#D47FA6] to-transparent rounded-full animate-meteor" style={{ animationDelay: '2.5s' }}></div>
-      <div className="absolute top-2/3 right-1/4 w-20 h-[1px] bg-gradient-to-l from-white via-[#FFFFFF] to-transparent rounded-full animate-meteor" style={{ animationDelay: '4s' }}></div> */}
-
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-[#D47FA6]/5 rounded-full animate-galaxy-orbit"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] border border-[#2A9DF4]/5 rounded-full animate-galaxy-orbit" style={{ animationDirection: 'reverse', animationDuration: '45s' }}></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] border border-[#D47FA6]/8 rounded-full animate-galaxy-orbit" style={{ animationDuration: '25s' }}></div>
@@ -96,26 +92,30 @@ export default function Hero() {
 
           <div className="relative mx-auto max-w-sm animate-rise-up">
             <div className="relative">
-              <div className="absolute -inset-12 bg-gradient-to-br from-[#D47FA6]/15 via-[#2A9DF4]/10 to-transparent rounded-full blur-3xl animate-galaxy-pulse"></div>
-              <div className="absolute -inset-6 bg-[#2A9DF4]/8 rounded-full blur-2xl animate-star-glow"></div>
-              <div className="absolute -inset-8 rounded-full border border-[#D47FA6]/15 animate-galaxy-orbit" style={{ animationDuration: '20s' }}></div>
-              <div className="absolute -inset-10 rounded-full border border-[#2A9DF4]/10 animate-galaxy-orbit" style={{ animationDirection: 'reverse', animationDuration: '25s' }}></div>
+              <div className="absolute -inset-8 bg-gradient-to-br from-[#D47FA6]/15 via-[#2A9DF4]/10 to-transparent blur-3xl animate-galaxy-pulse"></div>
+              <div className="absolute -inset-4 bg-[#2A9DF4]/8 blur-2xl animate-star-glow"></div>
               
-              <div className="relative bg-gradient-to-br from-[#0A0A1A]/90 to-[#120C2E]/80 backdrop-blur-sm shadow-2xl border border-[#D47FA6]/25 rounded-full overflow-hidden hover-lift">
-                <div className="aspect-square rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#0A0A1A] to-[#1A1040]">
-                  <div className="text-center p-8">
-                    <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-[#8B5A2B] to-[#6B3F1F] rounded-full animate-cosmic-float relative shadow-[0_0_30px_rgba(139,90,43,0.3)]">
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-[#DC143C] rounded-full shadow-[0_0_15px_rgba(220,20,60,0.4)]"></div>
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#DC143C] rounded-full"></div>
-                      <div className="absolute -bottom-1 left-1/4 w-2 h-2 bg-[#DC143C] rounded-full"></div>
-                    </div>
-                    <div className="text-3xl font-playfair text-[#D47FA6] mb-2 drop-shadow-[0_0_10px_rgba(212,127,166,0.4)]">MCP</div>
-                    <p className="text-sm font-quicksand font-bold text-[#D47FA6]/70 uppercase tracking-wider">{authorInfo.name}</p>
-                  </div>
+              <div className="relative rounded-2xl bg-gradient-to-br from-[#0A0A1A]/90 to-[#120C2E]/80 backdrop-blur-sm shadow-2xl border border-[#D47FA6]/25 overflow-hidden hover-lift">
+                <div className="aspect-[3/4] overflow-hidden ">
+                  <img
+                    src="/images/profile.png"
+                    alt={authorInfo.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none'
+                      e.target.parentElement.classList.add('flex', 'items-center', 'justify-center', 'bg-gradient-to-br', 'from-[#0A0A1A]', 'to-[#1A1040]')
+                      e.target.parentElement.innerHTML = `
+                        <div class="text-center p-8">
+                          <div class="text-4xl font-playfair font-bold text-[#D47FA6] mb-2 drop-shadow-[0_0_10px_rgba(212,127,166,0.4)]">MCP</div>
+                          <p class="text-sm font-quicksand font-bold text-[#D47FA6]/70 uppercase tracking-wider">${authorInfo.name}</p>
+                        </div>
+                      `
+                    }}
+                  />
                 </div>
               </div>
             </div>
-            <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-32 h-16 bg-gradient-to-b from-[#2A9DF4]/20 to-transparent rounded-full blur-2xl animate-star-glow"></div>
+            <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-32 h-16 bg-gradient-to-b from-[#2A9DF4]/20 to-transparent blur-2xl animate-star-glow"></div>
           </div>
         </div>
       </div>
